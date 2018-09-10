@@ -1,7 +1,9 @@
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import static com.codeborne.selenide.Selenide.screenshot;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
@@ -31,7 +33,7 @@ public class RoyallibElements {
 
     public RoyallibElements() throws IOException { }
 
-    private static org.slf4j.Logger log = (org.slf4j.Logger) LoggerFactory.getLogger(RoyallibPage.class);
+    private static org.slf4j.Logger log = (org.slf4j.Logger) LoggerFactory.getLogger(RoyallibElements.class);
     public FileWriter writer = new FileWriter ("output.txt", true);
     public static class MyListener extends AbstractWebDriverEventListener {
 
@@ -47,6 +49,8 @@ public class RoyallibElements {
 
 
     public void chooseLetters (WebDriver driver, String letters) throws IOException {
+        Configuration.browser = "chrom";
+
         writer.write("\n Проверка букв ___" + letters);
         log.info(letters);
         SelenideElement box = $(letterBox).shouldBe(visible);
@@ -56,6 +60,7 @@ public class RoyallibElements {
             writer.flush();
         }
       else  {
+           screenshot("eee.png");
             File scrFile = ((TakesScreenshot) driver).
                     getScreenshotAs(OutputType.FILE);
             File screenShotFile = new File(letters + ".png");

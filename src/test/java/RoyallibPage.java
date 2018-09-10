@@ -1,3 +1,5 @@
+import java.lang.*;
+import com.codeborne.selenide.Configuration;
 import org.junit.Before;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,16 +11,18 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Configuration.*;
 import static com.codeborne.selenide.Selenide.$;
 
 public class RoyallibPage extends RoyallibElements {
     public RoyallibPage() throws IOException { }
 
-    private static org.slf4j.Logger log = (org.slf4j.Logger) LoggerFactory.getLogger(RoyallibPage.class);
+    private static org.slf4j.Logger log = LoggerFactory.getLogger(RoyallibPage.class);
     public FileWriter writer = new FileWriter ("output.txt", true);
 
+
+
     public static WebDriver driver = new ChromeDriver();
-    public WebDriverWait wait;
 
     //Класс для логирования
     public static class MyListener extends AbstractWebDriverEventListener {
@@ -31,8 +35,7 @@ public class RoyallibPage extends RoyallibElements {
     }
 
     @Before
-    public void setUp() throws Exception {
-
+    public void setUp() {
         //Перейти на домашнюю страницу
         driver.navigate().to(baseUrl);
         driver.manage().window().maximize();

@@ -1,3 +1,5 @@
+import com.codeborne.selenide.WebDriverRunner;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -8,25 +10,24 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.screenshot;
 
 public class RoyallibPage extends RoyallibElements {
     public RoyallibPage() throws IOException { }
 
     private static org.slf4j.Logger log = LoggerFactory.getLogger(RoyallibPage.class);
     public FileWriter writer = new FileWriter ("output.txt", true);
-    public static WebDriver driver = new ChromeDriver();
+      public static WebDriver driver = new ChromeDriver();
+
 
 
     @BeforeClass
     public static void setUp() {
+        WebDriverRunner.setWebDriver(driver);
         //Перейти на домашнюю страницу
-        driver.navigate().to(baseUrl);
-        driver.manage().window().maximize();
-        WebDriverWait wait = new WebDriverWait(driver, 15);
-        //Неявная задержка
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-        //Ожидание, пока станет видимым поле для поиска
-        WebElement element = driver.findElement(By.id("q"));
+        open(baseUrl);
+        $(By.id("q")).shouldBe(visible);
     }
 
      //Найти на сайте фамилию автора 'Фейхтвангер' - слово должно быть найдено
@@ -43,6 +44,7 @@ public class RoyallibPage extends RoyallibElements {
             writer.flush();
         }
         else {
+            screenshot(author + ".png");
             writer.write("\\n ОШИБКА! Не найден автор ____ " + author);
             writer.flush();
             log.error("Не найден автор ____" + author);

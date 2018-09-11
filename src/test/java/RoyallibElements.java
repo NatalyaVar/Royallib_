@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.screenshot;
 
 
 public class RoyallibElements {
@@ -43,6 +44,7 @@ public class RoyallibElements {
         }
 
       else  {
+          screenshot(letters + "LLkkk");
             File scrFile = ((TakesScreenshot) driver).
                     getScreenshotAs(OutputType.FILE);
             File screenShotFile = new File(letters + ".png");

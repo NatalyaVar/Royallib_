@@ -1,3 +1,4 @@
+import com.codeborne.selenide.junit.ScreenShooter;
 import org.junit.*;
 import org.openqa.selenium.support.PageFactory;
 import java.io.IOException;
@@ -8,11 +9,15 @@ public class RoyallibTest extends RoyallibPage {
 
     RoyallibPage royallibPage = new RoyallibPage();
 
+    @Rule
+    public ScreenShooter makeScreenshotOnFailure = ScreenShooter.failedTests();
+
     @Before
     public  void  pFactory() {
         PageFactory.initElements(driver, royallibPage);
     }
 
+    //Проверить, что на сайте можно найти автора 'Фейхтвангер'
     @Test
     public void searchFeuchtwangerTest() throws IOException {
         royallibPage.searchFeuchtwanger(driver);
